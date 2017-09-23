@@ -12,6 +12,7 @@ personReq.addEventListener("load", function(){
 var homeWorldReq = new XMLHttpRequest();
 homeWorldReq.addEventListener("load", function(){
   var homeworldObj = JSON.parse(this.responseText);
+  //console.log(homeworldObj);
   document.getElementById("person4HomeWorld").innerHTML =homeworldObj.name;
 });
 //CALL SECOND REQUEST
@@ -28,20 +29,20 @@ personReq.send();
 //THIRD REQUEST: "person14Name"
 var person2Req = new XMLHttpRequest();
 person2Req.addEventListener("load",function(){
-  var personObj = JSON.parse(this.responseText);
-  console.log(personObj);
+var personObj = JSON.parse(this.responseText);
+  //console.log(personObj);
   document.getElementById("person14Name").innerHTML=personObj.name;
 //FOURTH REQUEST: "person14Species", NESTED IN THIRD FOR THE SPECIES PROPERTY IN PERSON2;
 var speciesReq = new XMLHttpRequest();
 speciesReq.addEventListener("load", function(){
   var speciesObj = JSON.parse(this.responseText);
+  console.log(speciesObj.name);
   document.getElementById("person14Species").innerHTML = speciesObj.name;
 
 //SEND FOURTH REQUEST
+});
 speciesReq.open("GET", personObj.species);
 speciesReq.send();
-});
-
 //SEND THIRD REQUEST
 });
 person2Req.open("GET","http://swapi.co/api/people/14");
@@ -55,29 +56,40 @@ person2Req.send();
 var filmsReq = new XMLHttpRequest();
 filmsReq.addEventListener("load", function(){
   var films = JSON.parse(this.responseText).results;
-  console.log(films);
+  //console.log(films);
   for(var i = 0; i < films.length; i++){
     var list = document.createElement("li");
+    var listHeader = document.createElement("h2");
     var filmsObj = document.getElementById("filmList");
     var titles = films[i].title;
-    list.innerHTML = titles;
+    listHeader.innerHTML = titles;
+    list.appendChild(listHeader);
     filmsObj.appendChild(list);
     //var title = films[i]
-    console.log(titles);
+    //console.log(films[i].planets);
+    var planetArr = films[i].planets;
+
+    for(var j = 0; j < planetArr.length; j++){
+      console.log(planetArr[j]);
+
+    // var planetNameReq = new XMLHttpRequest();
+    // planetNameReq.addEventListener("load", function(){
+    //   var planetNames = JSON.parse(this.responseText);
+    // });
+    // filmsReq.open("GET", planetArr[j]);
+    // filmsReq.send();
     }
 
 
-
-
-
-
-
-
-
-
-
+}
 
 });
+
+
+
+
+
+
 filmsReq.open("GET", "http://swapi.co/api/films/");
 filmsReq.send();
 
@@ -102,21 +114,21 @@ filmsReq.send();
 //   var getName = document.getElementById("person14Name").innerHTML=personObj.name;
 // }
 
-function speciesListener(){
-  var species = JSON.parse(this.responseText);
-  var getSpecies = document.getElementById("person14Species").innerHTML = species.name;
-}
+// function speciesListener(){
+//   var species = JSON.parse(this.responseText);
+//   var getSpecies = document.getElementById("person14Species").innerHTML = species.name;
+// }
 
-function filmListener(){
-  var films = JSON.parse(this.responseText).results;
-  for(var i = 0; i < films.length; i++){
-  var filmTitles = document.createElement("li");
-  var getFilms = document.getElementById("filmList");
-  var titleName = films[i].title;
-  filmTitles.innerHTML = titleName;
-  getFilms.appendChild(filmTitles);
-  }
-}
+// function filmListener(){
+//   var films = JSON.parse(this.responseText).results;
+//   for(var i = 0; i < films.length; i++){
+//   var filmTitles = document.createElement("li");
+//   var getFilms = document.getElementById("filmList");
+//   var titleName = films[i].title;
+//   filmTitles.innerHTML = titleName;
+//   getFilms.appendChild(filmTitles);
+//   }
+// }
 
 
 
